@@ -91,6 +91,11 @@ Essentially this is a one-click install per se but theres a few things that you 
 
 If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
 
+### Options
+
+`-k`
+
+Adding a -k enables kiosk mode, this is almost fullscreen mode but more locked down, you won't have access to the tool bar for firefox.  Simply don't add this if you want the tool bar.
 
 
 ## Uninstall
@@ -131,4 +136,9 @@ https://www.paypal.me/kn0t5
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+
+## Disclaimer
+
+This project is experimental and not official.  Any use of this project may put your resources at a higher risk of failure.  The publisher nor the contributers shall have any liability for any damages casued by the user or the project.  Use at your own risk.
 
