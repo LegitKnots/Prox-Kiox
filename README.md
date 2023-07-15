@@ -1,4 +1,4 @@
-# Prox-Kiox
+# Prox-Kiox (version 1.3.1)
 
 ## About
 
@@ -25,7 +25,11 @@
 
 ### Automatic install
 
-``sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh)``
+This may not work or may be instable
+
+~sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh)~
+
+
 
 ### WGET Download
 
@@ -69,27 +73,43 @@ prefsfile="$profile_dir/sessionstore-backups"
 
 rm -rf "$prefsfile"/*
 
-nohup startx &
-sleep 3         # Adjust this as needed if the display refuses to connect
+# Function to check if a process is running
+is_process_running() {
+  pgrep "$1" > /dev/null
+}
+
+# Start X server if not running
+if ! is_process_running "X"; then
+  nohup startx &
+fi
+
+sleep 1
 export DISPLAY=:0
-openbox &
-sleep 2         # Adjust this as needed if the display refuses to connect
-firefox-esr --kiosk "https://127.0.0.1:8006" &
+
+# Start Openbox if not running
+if ! is_process_running "openbox"; then
+  nohup openbox &
+fi
+if ! is_process_running "firefox-esr"; then
+  firefox-esr --kiosk "https://127.0.0.1:8006" &
+fi
 ```
 
 Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is times and executes properly
 
 Note that as like above, you can modify the sleeps to suite your case, if the display refuses to connect, just modify the sleep by 1 second more and run again, try to match these with above.
 
-``nohup startx & sleep 3 export DISPLAY=:0 openbox & sleep 2 firefox-esr --kiosk "https://127.0.0.1:8006" &``
+``nohup startx & sleep 1 export DISPLAY=:0 openbox & firefox-esr --kiosk "https://127.0.0.1:8006" &``
 
-Now you should be able to see FireFox runing and you can use it however you want.
+Now you should be able to see FireFox runing and the PVE webui screen.
 
 
 
 ## Usage
 
-Essentially this is a one-click install per se but theres a few things that you need to keep in mind and can modify in the script, at least for v1 (current)
+You can use either of the three methods to install but the most stable is going to be with wget.
+
+For the manual install, above defaults to kiosk mode but since the backbone of this is a basic Firefox application, you can remove the --kiost from both commands in the auto run and post install and you'll be able to use it like a normal browser
 If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
 
 ### Options
