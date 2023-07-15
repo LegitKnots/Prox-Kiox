@@ -31,7 +31,7 @@
 
 Download the install script using wget
 
-``wget https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh``
+``wget https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh && chmod +x install.sh``
 
 From here you can look at the usage section below to determine if its necessary to modify the sleep times.
 After they have been changed or not you can simply run the script using the following
@@ -108,7 +108,7 @@ Or you may use the wget method as like above but using uninstall.sh instead, lik
 
 Download the install script using wget
 
-``wget https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/uninstall.sh``
+``wget https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/uninstall.sh && chmod +x uninstall.sh``
 
 From here you can look at the usage section below to determine if its necessary to modify the sleep times.
 After they have been changed or not you can simply run the script using the following
