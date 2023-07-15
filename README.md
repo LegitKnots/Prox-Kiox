@@ -65,12 +65,15 @@ export DISPLAY=:0
 openbox &
 sleep 2
 firefox-esr &
-sleep 15
-xdotool key ctrl+j 2>/dev/null
-xdotool key BackSpace 2>/dev/null
-xdotool type "http://127.0.0.1:8006" 2>/dev/null
-xdotool key F11 2>/dev/null
-xdotool key Return 2>/dev/null
+```
+
+Now we want to modify a Firefox config file to specify the start page url
+We can easily do so by running these 3 echo commands to insert the lines at the bottom of the file
+
+```
+echo "" >> "/etc/firefox-esr/firefox-esr.js"
+echo "// Defines the browser start page url" >> "/etc/firefox-esr/firefox-esr.js"
+echo "pref(\"browser.startup.homepage\", https://127.0.0.1:8006);" >> "/etc/firefox-esr/firefox-esr.js"
 ```
 
 Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is times and executes properly
