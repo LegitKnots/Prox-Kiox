@@ -64,7 +64,7 @@ sleep 2
 export DISPLAY=:0
 
 # Start Openbox
-nohup openbox &
+openbox &
 
 sleep 2
 

@@ -69,7 +69,7 @@ prefsfile="$profile_dir/sessionstore-backups"
 
 rm -rf "$prefsfile"/*
 
-startx &
+nohup startx &
 sleep 1
 export DISPLAY=:0
 openbox &
@@ -122,8 +122,7 @@ Please not that these scripts do not delete themselves, so you will need to run
 
 ## Known Issues
 
-None :)
-
+Something is going on with the shell and it crashing whe  you open it in the webui.  It was working for a solid 5 minutes until I changed something unrelated, then it broke :\  Dont click on sheel for now untill its fixed.
 
 ## Donate
 
