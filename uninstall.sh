@@ -7,6 +7,9 @@ killall -q xorg
 
 # Remove the auto-run script
 rm /etc/profile.d/prox-kiox.sh
+rm -rf /root/.mozilla
+rm -rf /etc/firefox-esr
+
 
 # Uninstall dependencies
 apt-get remove -y openbox firefox-esr xinit xdotool

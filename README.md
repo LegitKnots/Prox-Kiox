@@ -48,7 +48,7 @@ First, Update the running server with
 
 Next, we need to install the following dependencies
 
-``apt-get install -y openbox firefox-esr xinit xdotool``
+``apt-get install -y openbox firefox-esr xinit``
 
 Before we start the process and run the window manager and FireFox, we want to create a script that will automatically run the start script upon login.
 We can first create the file with the following command and then nano into it.
@@ -59,26 +59,27 @@ The following code should be place in the file
 
 ```
 #!/bin/bash
+
+profile_dir=$(find ~/.mozilla/firefox/ -name '*.default-esr' -type d)
+if [ -z "$profile_dir" ]; then
+    echo "Firefox profile directory not found."
+    exit 1
+fi
+prefsfile="$profile_dir/sessionstore-backups"
+
+rm -rf "$prefsfile"/*
+
 startx &
-sleep 5
+sleep 1
 export DISPLAY=:0
 openbox &
-sleep 2
-firefox-esr &
-```
-
-Now we want to modify a Firefox config file to specify the start page url
-We can easily do so by running these 3 echo commands to insert the lines at the bottom of the file
-
-```
-echo "" >> "/etc/firefox-esr/firefox-esr.js"
-echo "// Defines the browser start page url" >> "/etc/firefox-esr/firefox-esr.js"
-echo "pref(\"browser.startup.homepage\", https://127.0.0.1:8006);" >> "/etc/firefox-esr/firefox-esr.js"
+sleep 1
+firefox-esr --kiosk "https://127.0.0.1:8006" &
 ```
 
 Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is times and executes properly
 
-``startx & sleep 5; export DISPLAY=:0; openbox & sleep 2; firefox-esr &``
+``startx & sleep 5 export DISPLAY=:0 openbox & sleep 2 firefox-esr --kiosk "https://127.0.0.1:8006" &``
 
 Now you should be able to see FireFox runing and you can use it however you want.
 
@@ -88,16 +89,14 @@ Now you should be able to see FireFox runing and you can use it however you want
 
 Essentially this is a one-click install per se but theres a few things that you need to keep in mind and can modify in the script, at least for v1 (current)
 
-First off, the various sleeps within the script can be modified and fine tuned depending on how fast or slow your system starts up the applications.  I've found that startx and openbox tend to start quickly while firefox may take up to 15 seconds to start in some cases, so you just need to be patient there.
-
-Another thing, with the above automatic install, it will install with a 15 second delay to actually send the keyboard commands on a reboot and 10 seconds on first install.  This is simply to accomodate slower systems and can be tweaked if you clone into the repo instead.
+If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
 
 
 ## Uninstall
 
 At any time, you may run the uninstaller script ant it will clean the system of all packages that were installed and remove the autorun file so theres no issues after the fact.  You can do so with the following
 
-``sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh)``
+``sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/uninstall.sh)``
 
 Or you may use the wget method as like above but using uninstall.sh instead, like this
 
