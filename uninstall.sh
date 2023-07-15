@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Stop running processes
-killall -q firefox-esr
 killall -q openbox
-killall -q xorg
+killall -q firefox-esr
+killall -q xinit
 
 # Remove the auto-run script
 rm /etc/profile.d/prox-kiox.sh

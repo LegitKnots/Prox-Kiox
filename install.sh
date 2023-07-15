@@ -51,6 +51,7 @@ if ! is_process_running "X"; then
   nohup startx &
 fi
 
+sleep 1
 export DISPLAY=:0
 
 # Start Openbox if not running
@@ -63,20 +64,16 @@ fi
 fi
 
 if [[ $kiosk = true ]]; then
-  if ! echo '
-            if ! is_process_running "firefox-esr"; then
-              firefox-esr --kiosk "https://127.0.0.1:8006" &
-            fi
-          ' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
+  if ! echo 'if ! is_process_running "firefox-esr"; then
+  firefox-esr --kiosk "https://127.0.0.1:8006" &
+fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo "Failed to add kiosk command to auto-run script."
     exit 1
   fi
 else
-  if ! echo '
-            if ! is_process_running "firefox-esr"; then
-              firefox-esr "https://127.0.0.1:8006" &
-            fi
-          ' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
+  if ! echo 'if ! is_process_running "firefox-esr"; then
+  firefox-esr "https://127.0.0.1:8006" &
+fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo "Failed to add regular command to auto-run script."
     exit 1
   fi
@@ -92,6 +89,7 @@ if ! is_process_running "X"; then
   nohup startx &
 fi
 
+sleep 1
 export DISPLAY=:0
 
 # Start Openbox if not running
