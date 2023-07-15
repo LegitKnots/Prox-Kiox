@@ -1,4 +1,4 @@
-# Prox-Kiox (version 1.3.1)
+# Prox-Kiox (version 1.3.2)
 
 ## About
 
@@ -112,12 +112,6 @@ You can use either of the three methods to install but the most stable is going 
 For the manual install, above defaults to kiosk mode but since the backbone of this is a basic Firefox application, you can remove the --kiost from both commands in the auto run and post install and you'll be able to use it like a normal browser
 If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
 
-### Options
-
-`-k`
-
-Adding a -k enables kiosk mode, this is almost fullscreen mode but more locked down, you won't have access to the tool bar for firefox.  Simply don't add this if you want the tool bar.
-
 
 
 ## Uninstall
@@ -144,9 +138,7 @@ Please not that these scripts do not delete themselves, so you will need to run
 
 ## Known Issues
 
-Something is going on with the shell and its crashing whe  you open it in the webui.  It was working for a solid 5 minutes until I changed something unrelated, then it broke :\  Dont click on shell for now untill its fixed.
-
-Sometimes you may get an error message saying that the display refused to connect or timed out or something along those lines.  Theres not much of a fix for it right now until I can get a listener going for when thing are open and ready, but best chance is to modify the sleep times as listed above.
+On some systems, the auto run script will fail to run properly after logon, will require the install script to be run again.
 
 ## Donate
 
