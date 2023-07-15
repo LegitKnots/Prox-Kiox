@@ -92,6 +92,7 @@ Essentially this is a one-click install per se but theres a few things that you 
 If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
 
 
+
 ## Uninstall
 
 At any time, you may run the uninstaller script ant it will clean the system of all packages that were installed and remove the autorun file so theres no issues after the fact.  You can do so with the following
@@ -112,6 +113,12 @@ After they have been changed or not you can simply run the script using the foll
 Please not that these scripts do not delete themselves, so you will need to run
 
 ``rm /path/to/script/uninstall.sh``
+
+
+## Known Issues
+
+Opening the shell console from the window manager with this will brick it and require a system reboot.  Currently don't have a work-around.  Shell is still accessable via another machine either by SSH or the WebUI
+
 
 
 ## Donate
