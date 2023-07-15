@@ -35,11 +35,11 @@ prefsfile="$profile_dir/sessionstore-backups"
 
 rm -rf "$prefsfile"/*
 
-startx &
-sleep 1
+nohup startx &
+sleep 2
 export DISPLAY=:0
-openbox &
-sleep 1' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
+nohup openbox &
+sleep 2' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
   echo "Failed to create auto-run script."
   exit 1
 fi
@@ -64,7 +64,7 @@ sleep 2
 export DISPLAY=:0
 
 # Start Openbox
-openbox &
+nohup openbox &
 
 sleep 2
 
