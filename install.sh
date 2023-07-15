@@ -25,7 +25,7 @@ firefox-esr --kiosk "https://127.0.0.1:8006" &' | tee /etc/profile.d/prox-kiox.s
 
 startx &
 
-sleep 5
+sleep 2
 
 export DISPLAY=:0
 
