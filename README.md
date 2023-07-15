@@ -79,7 +79,7 @@ firefox-esr --kiosk "https://127.0.0.1:8006" &
 
 Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is times and executes properly
 
-``startx & sleep 5 export DISPLAY=:0 openbox & sleep 2 firefox-esr --kiosk "https://127.0.0.1:8006" &``
+``nohup startx & sleep 5 export DISPLAY=:0 openbox & sleep 2 firefox-esr --kiosk "https://127.0.0.1:8006" &``
 
 Now you should be able to see FireFox runing and you can use it however you want.
 
@@ -122,7 +122,7 @@ Please not that these scripts do not delete themselves, so you will need to run
 
 ## Known Issues
 
-Something is going on with the shell and it crashing whe  you open it in the webui.  It was working for a solid 5 minutes until I changed something unrelated, then it broke :\  Dont click on sheel for now untill its fixed.
+Something is going on with the shell and its crashing whe  you open it in the webui.  It was working for a solid 5 minutes until I changed something unrelated, then it broke :\  Dont click on shell for now untill its fixed.
 
 ## Donate
 
