@@ -13,6 +13,10 @@ while getopts "k" opt; do
   esac
 done
 
+# Update the repos and upgrade them
+
+apt-get update && apt-get upgrade -y
+
 # Install dependencies
 apt-get install -y openbox firefox-esr xinit
 
@@ -36,10 +40,11 @@ prefsfile="$profile_dir/sessionstore-backups"
 rm -rf "$prefsfile"/*
 
 nohup startx &
-sleep 2
+sleep 3               # Adjust this as needed if the display refuses to connect
 export DISPLAY=:0
 nohup openbox &
-sleep 2' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
+sleep 2               # Adjust this as needed if the display refuses to connect
+' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
   echo "Failed to create auto-run script."
   exit 1
 fi
@@ -59,14 +64,14 @@ fi
 # Start X server
 nohup startx &
 
-sleep 2
+sleep 3 # Adjust this as needed if the display refuses to connect
 
 export DISPLAY=:0
 
 # Start Openbox
 nohup openbox &
 
-sleep 2
+sleep 2 # Adjust this as needed if the display refuses to connect
 
 # Start Firefox
 if [[ $kiosk = true ]]; then

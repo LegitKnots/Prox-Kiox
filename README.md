@@ -4,7 +4,7 @@
 
 ### This Project was idealized by a member of the Harvey's Virtual Environment Discord community and brought together by myself.  All credit for the idea goes the HSVE Community. 
 ### Prox-Kiox is simply an install script that will essentially turn any Proxmox intall into a kiosk setup, allowing for full UI managemnt of Proxmox from its main display out. 
-### It will install a window manager as well as fire fox in order to achieve this by opening a window automatically and placing it in full screen mode after navigating to the correnct location, being http://127.0.0.1:8006.
+### It will install a window manager as well as Firefox in order to achieve this by opening a window automatically and placing it in full screen mode after navigating to the correct location, being http://127.0.0.1:8006.
 
 ### You can find more about Harvey's Virtual Environment at the following
 ### https://discord.gg/WGUdajWzxz
@@ -70,16 +70,18 @@ prefsfile="$profile_dir/sessionstore-backups"
 rm -rf "$prefsfile"/*
 
 nohup startx &
-sleep 1
+sleep 3         # Adjust this as needed if the display refuses to connect
 export DISPLAY=:0
 openbox &
-sleep 1
+sleep 2         # Adjust this as needed if the display refuses to connect
 firefox-esr --kiosk "https://127.0.0.1:8006" &
 ```
 
 Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is times and executes properly
 
-``nohup startx & sleep 5 export DISPLAY=:0 openbox & sleep 2 firefox-esr --kiosk "https://127.0.0.1:8006" &``
+Note that as like above, you can modify the sleeps to suite your case, if the display refuses to connect, just modify the sleep by 1 second more and run again, try to match these with above.
+
+``nohup startx & sleep 3 export DISPLAY=:0 openbox & sleep 2 firefox-esr --kiosk "https://127.0.0.1:8006" &``
 
 Now you should be able to see FireFox runing and you can use it however you want.
 
@@ -88,7 +90,6 @@ Now you should be able to see FireFox runing and you can use it however you want
 ## Usage
 
 Essentially this is a one-click install per se but theres a few things that you need to keep in mind and can modify in the script, at least for v1 (current)
-
 If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
 
 ### Options
@@ -96,6 +97,7 @@ If you dont want it to always be full screen you can remove the '--kiosk' from t
 `-k`
 
 Adding a -k enables kiosk mode, this is almost fullscreen mode but more locked down, you won't have access to the tool bar for firefox.  Simply don't add this if you want the tool bar.
+
 
 
 ## Uninstall
@@ -124,6 +126,8 @@ Please not that these scripts do not delete themselves, so you will need to run
 
 Something is going on with the shell and its crashing whe  you open it in the webui.  It was working for a solid 5 minutes until I changed something unrelated, then it broke :\  Dont click on shell for now untill its fixed.
 
+Sometimes you may get an error message saying that the display refused to connect or timed out or something along those lines.  Theres not much of a fix for it right now until I can get a listener going for when thing are open and ready, but best chance is to modify the sleep times as listed above.
+
 ## Donate
 
 If you found this project helpful, please consider donating to the project throu PayPal, always appreciated.
@@ -135,6 +139,7 @@ https://www.paypal.me/kn0t5
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
 
 
 ## Disclaimer
