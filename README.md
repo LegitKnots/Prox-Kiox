@@ -3,7 +3,7 @@
 ## About
 
 ### This Project was idealized by a member of the Harvey's Virtual Environment Discord community and brought together by myself.  All credit for the idea goes the HSVE Community. 
-### Prox-Kiosk is simply an install script that will essentially turn any Proxmox intall into a kiosk setup, allowing for full UI managemnt of Proxmox from its main display out. 
+### Prox-Kiox is simply an install script that will essentially turn any Proxmox intall into a kiosk setup, allowing for full UI managemnt of Proxmox from its main display out. 
 ### It will install a window manager as well as fire fox in order to achieve this by opening a window automatically and placing it in full screen mode after navigating to the correnct location, being http://127.0.0.1:8006.
 
 ### You can find more about Harvey's Virtual Environment at the following
@@ -25,13 +25,13 @@
 
 ### Automatic install
 
-``sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiosk/main/install.sh)``
+``sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh)``
 
 ### WGET Download
 
 Download the install script using wget
 
-``wget https://raw.githubusercontent.com/AJPNetworks/DashLinx/main/install.sh``
+``wget https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh``
 
 From here you can look at the usage section below to determine if its necessary to modify the sleep times.
 After they have been changed or not you can simply run the script using the following
@@ -53,7 +53,7 @@ Next, we need to install the following dependencies
 Before we start the process and run the window manager and FireFox, we want to create a script that will automatically run the start script upon login.
 We can first create the file with the following command and then nano into it.
 
-``touch /etc/profile.d/prox-kiosk.sh && nano /etc/profile.d/prox-kiosk.sh``
+``touch /etc/profile.d/prox-kiox.sh && nano /etc/profile.d/prox-kiox.sh``
 
 The following code should be place in the file
 

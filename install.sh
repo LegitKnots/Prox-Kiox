@@ -16,7 +16,7 @@ xdotool key ctrl+j 2>/dev/null
 xdotool key BackSpace 2>/dev/null
 xdotool type "http://127.0.0.1:8006" 2>/dev/null
 xdotool key F11 2>/dev/null
-xdotool key Return 2>/dev/null' | tee /etc/profile.d/prox-kiosk.sh > /dev/null
+xdotool key Return 2>/dev/null' | tee /etc/profile.d/prox-kiox.sh > /dev/null
 
 
 # Start the X server
