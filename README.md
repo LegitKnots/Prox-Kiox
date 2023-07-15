@@ -117,8 +117,7 @@ Please not that these scripts do not delete themselves, so you will need to run
 
 ## Known Issues
 
-Opening the shell console from the window manager with this will brick it and require a system reboot.  Currently don't have a work-around.  Shell is still accessable via another machine either by SSH or the WebUI
-
+None :)
 
 
 ## Donate

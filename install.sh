@@ -23,7 +23,7 @@ sleep 1
 firefox-esr --kiosk "https://127.0.0.1:8006" &' | tee /etc/profile.d/prox-kiox.sh > /dev/null
 
 
-startx &
+nohup startx &
 
 sleep 2
 
