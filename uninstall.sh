@@ -12,7 +12,7 @@ rm -rf /etc/firefox-esr
 
 
 # Uninstall dependencies
-apt-get remove -y openbox firefox-esr xinit xdotool
+apt-get remove -y openbox firefox-esr xinit
 
 # Clean up any residual configuration files
 apt-get autoremove -y

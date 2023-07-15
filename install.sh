@@ -17,6 +17,8 @@ done
 
 apt-get update && apt-get upgrade -y
 
+apt-get autoremove -y
+
 # Install dependencies
 apt-get install -y openbox firefox-esr xinit
 
@@ -39,43 +41,72 @@ prefsfile="$profile_dir/sessionstore-backups"
 
 rm -rf "$prefsfile"/*
 
-nohup startx &
-sleep 3               # Adjust this as needed if the display refuses to connect
+# Function to check if a process is running
+is_process_running() {
+  pgrep "$1" > /dev/null
+}
+
+# Start X server if not running
+if ! is_process_running "X"; then
+  nohup startx &
+fi
+
 export DISPLAY=:0
-nohup openbox &
-sleep 2               # Adjust this as needed if the display refuses to connect
+
+# Start Openbox if not running
+if ! is_process_running "openbox"; then
+  nohup openbox &
+fi
 ' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
   echo "Failed to create auto-run script."
   exit 1
 fi
 
 if [[ $kiosk = true ]]; then
-  if ! echo 'firefox-esr --kiosk "https://127.0.0.1:8006" &' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
+  if ! echo '
+            if ! is_process_running "firefox-esr"; then
+              firefox-esr --kiosk "https://127.0.0.1:8006" &
+            fi
+          ' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo "Failed to add kiosk command to auto-run script."
     exit 1
   fi
 else
-  if ! echo 'firefox-esr "https://127.0.0.1:8006" &' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
+  if ! echo '
+            if ! is_process_running "firefox-esr"; then
+              firefox-esr "https://127.0.0.1:8006" &
+            fi
+          ' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo "Failed to add regular command to auto-run script."
     exit 1
   fi
 fi
 
-# Start X server
-nohup startx &
+# Function to check if a process is running
+is_process_running() {
+  pgrep "$1" > /dev/null
+}
 
-sleep 3 # Adjust this as needed if the display refuses to connect
+# Start X server if not running
+if ! is_process_running "X"; then
+  nohup startx &
+fi
 
 export DISPLAY=:0
 
-# Start Openbox
-nohup openbox &
-
-sleep 2 # Adjust this as needed if the display refuses to connect
-
-# Start Firefox
-if [[ $kiosk = true ]]; then
-  firefox-esr --kiosk "https://127.0.0.1:8006" &
-else
-  firefox-esr "https://127.0.0.1:8006" &
+# Start Openbox if not running
+if ! is_process_running "openbox"; then
+  nohup openbox &
 fi
+
+# Start Firefox if not running
+if [[ $kiosk = true ]]; then
+  if ! is_process_running "firefox-esr"; then
+    firefox-esr --kiosk "https://127.0.0.1:8006" &
+  fi
+else
+  if ! is_process_running "firefox-esr"; then
+    firefox-esr "https://127.0.0.1:8006" &
+  fi
+fi
+
