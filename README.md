@@ -90,6 +90,27 @@ First off, the various sleeps within the script can be modified and fine tuned d
 Another thing, with the above automatic install, it will install with a 15 second delay to actually send the keyboard commands on a reboot and 10 seconds on first install.  This is simply to accomodate slower systems and can be tweaked if you clone into the repo instead.
 
 
+## Uninstall
+
+At any time, you may run the uninstaller script ant it will clean the system of all packages that were installed and remove the autorun file so theres no issues after the fact.  You can do so with the following
+
+``sh <(curl -sS https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/install.sh)``
+
+Or you may use the wget method as like above but using uninstall.sh instead, like this
+
+Download the install script using wget
+
+``wget https://raw.githubusercontent.com/AJPNetworks/Prox-Kiox/main/uninstall.sh``
+
+From here you can look at the usage section below to determine if its necessary to modify the sleep times.
+After they have been changed or not you can simply run the script using the following
+
+``./uninstall.sh``
+
+Please not that these scripts do not delete themselves, so you will need to run
+
+``rm /path/to/script/uninstall.sh``
+
 
 ## Donate
 
