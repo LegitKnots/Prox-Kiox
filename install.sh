@@ -1,13 +1,11 @@
 #!/bin/bash
 
-# Prompt the user
 echo "------------------------------------------------------------------"
 echo ""
 read -p "Enable kiosk mode? [Y/n]: " input
 
-# Process user input
-input=${input:-Y}  # Default to "Y" if no input provided
-input=${input,,}  # Convert input to lowercase
+input=${input:-Y}
+input=${input,,}
 
 if [[ $input == "y" ]]; then
   mode=kiosk
