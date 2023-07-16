@@ -68,6 +68,22 @@ echo "------------------------------------------------------------------"
 echo ""
 
 
+## Work-around for now to ensure that the .mozzila folder is present before continuing
+## Had an issue that would literally brick the system and not allow login, fixing with this and the sleep after no .mozzila in auto run below
+echo ""
+echo "------------------------------------------------------------------"
+echo "Initializing Firefox-ESR"
+echo ""
+sleep 0.5
+firefox-esr --headless &
+sleep 5
+killall firefox-esr
+echo ""
+echo "Done!"
+echo "------------------------------------------------------------------"
+echo ""
+
+
 
 if [[ $? -ne 0 ]]; then
   echo ""
@@ -93,6 +109,7 @@ echo ""
 if ! echo '#!/bin/bash
 profile_dir=$(find ~/.mozilla/firefox/ -name '*.default-esr' -type d)
 if [ -z "$profile_dir" ]; then
+    sleep 5
     echo "Firefox profile directory not found."
     exit 1
 fi
