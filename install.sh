@@ -104,6 +104,18 @@ echo ""
 
 # Install the auto-run script
 if ! echo '#!/bin/bash
+
+# Function to check if a process is running
+is_process_running() {
+  pgrep "$1" > /dev/null
+}
+
+if  is_process_running "firefox-esr"; then
+  clear
+  echo "Prox-Kiox already running"
+  return 1
+fi
+
 profile_dir=$(find "$HOME/.mozilla/firefox/" -name "*.default-esr" -type d)
 if [ -z "$profile_dir" ]; then
     echo ""
@@ -113,11 +125,6 @@ fi
 prefsfile="$profile_dir/sessionstore-backups"
 
 rm -rf "$prefsfile"/*
-
-# Function to check if a process is running
-is_process_running() {
-  pgrep "$1" > /dev/null
-}
 
 # Start X server if not running
 if ! is_process_running "X"; then
@@ -148,9 +155,7 @@ sleep 2' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
 fi
 
 if [[ $mode = kiosk ]]; then
-  if ! echo 'if ! is_process_running "firefox-esr"; then
-  firefox-esr --kiosk "https://127.0.0.1:8006" &
-fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
+  if ! echo 'firefox-esr --kiosk "https://127.0.0.1:8006" &' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo ""
     echo "------------------------------------------------------------------"
     echo ""
@@ -164,9 +169,7 @@ fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     exit 1
   fi
 else
-  if ! echo 'if ! is_process_running "firefox-esr"; then
-  firefox-esr "https://127.0.0.1:8006" &
-fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
+  if ! echo 'firefox-esr "https://127.0.0.1:8006" &' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo ""
     echo "------------------------------------------------------------------"
     echo ""
