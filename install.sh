@@ -124,7 +124,7 @@ if ! is_process_running "X"; then
   nohup startx &
 fi
 
-sleep 1
+sleep 2
 export DISPLAY=:0
 
 # Start Openbox if not running
@@ -132,7 +132,7 @@ if ! is_process_running "openbox"; then
   nohup openbox &
 fi
 
-sleep 1' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
+sleep 2' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
 
   echo ""
   echo "------------------------------------------------------------------"
@@ -198,7 +198,7 @@ if ! is_process_running "X"; then
   nohup startx &
 fi
 
-sleep 1
+sleep 2
 export DISPLAY=:0
 
 # Start Openbox if not running
@@ -206,7 +206,7 @@ if ! is_process_running "openbox"; then
   nohup openbox &
 fi
 
-sleep 1
+sleep 2
 
 # Start Firefox if not running
 if [[ $mode = kiosk ]]; then
