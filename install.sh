@@ -1,7 +1,5 @@
 #!/bin/bash
 
-kiosk=false
-
 # Prompt the user
 echo "------------------------------------------------------------------"
 echo ""
@@ -36,7 +34,7 @@ echo ""
 
 echo ""
 echo "------------------------------------------------------------------"
-echo "Installing dependancies: Openbox"
+echo "Installing dependencies: Openbox"
 echo ""
 sleep 0.5
 apt-get install -y openbox
@@ -47,7 +45,7 @@ echo ""
 
 echo ""
 echo "------------------------------------------------------------------"
-echo "Installing dependancies: Firefox-ESR"
+echo "Installing dependencies: Firefox-ESR"
 echo ""
 sleep 0.5
 apt-get install -y firefox-esr
@@ -58,7 +56,7 @@ echo ""
 
 echo ""
 echo "------------------------------------------------------------------"
-echo "Installing dependancies: Xinit"
+echo "Installing dependencies: Xinit"
 echo ""
 sleep 0.5
 apt-get install -y xinit
@@ -68,8 +66,8 @@ echo "------------------------------------------------------------------"
 echo ""
 
 
-## Work-around for now to ensure that the .mozzila folder is present before continuing
-## Had an issue that would literally brick the system and not allow login, fixing with this and the sleep after no .mozzila in auto run below
+## Workaround for now to ensure that the .mozilla folder is present before continuing
+## Had an issue that would literally brick the system and not allow login, fixing with this and the sleep after no .mozilla in auto run below
 echo ""
 echo "------------------------------------------------------------------"
 echo "Initializing Firefox-ESR"
@@ -84,18 +82,17 @@ echo "------------------------------------------------------------------"
 echo ""
 
 
-
 if [[ $? -ne 0 ]]; then
   echo ""
   echo "------------------------------------------------------------------"
   echo ""
-  echo "Failed to install dependencies. Purging rest..."
+  echo "Failed to install dependencies. Purging the rest..."
   sleep 0.5
   echo ""
   apt-get purge -y openbox firefox-esr xinit
   echo ""
   echo "------------------------------------------------------------------"
-  echo "Instalation Failed!"
+  echo "Installation Failed!"
   exit 1
 fi
 
@@ -107,7 +104,7 @@ echo ""
 
 # Install the auto-run script
 if ! echo '#!/bin/bash
-profile_dir=$(find ~/.mozilla/firefox/ -name '*.default-esr' -type d)
+profile_dir=$(find "$HOME/.mozilla/firefox/" -name "*.default-esr" -type d)
 if [ -z "$profile_dir" ]; then
     echo ""
     echo "Firefox profile directory not found."
@@ -133,18 +130,20 @@ export DISPLAY=:0
 # Start Openbox if not running
 if ! is_process_running "openbox"; then
   nohup openbox &
-fi' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
+fi
+
+sleep 1' | tee /etc/profile.d/prox-kiox.sh > /dev/null; then
 
   echo ""
   echo "------------------------------------------------------------------"
   echo ""
-  echo "Failed to create auto-run script.  Purging Dependancies...."
+  echo "Failed to create auto-run script. Purging dependencies...."
   sleep 0.5
   echo ""
   apt-get purge -y openbox firefox-esr xinit
   echo ""
   echo "------------------------------------------------------------------"
-  echo "Instalation Failed!"
+  echo "Installation Failed!"
   exit 1
 fi
 
@@ -155,13 +154,13 @@ fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo ""
     echo "------------------------------------------------------------------"
     echo ""
-    echo "Failed to add kiosk mode to auto-run script.  Purging Dependancies...."
+    echo "Failed to add kiosk mode to auto-run script. Purging dependencies...."
     sleep 0.5
     echo ""
     apt-get purge -y openbox firefox-esr xinit
     echo ""
     echo "------------------------------------------------------------------"
-    echo "Instalation Failed!"
+    echo "Installation Failed!"
     exit 1
   fi
 else
@@ -171,13 +170,13 @@ fi' | tee -a /etc/profile.d/prox-kiox.sh > /dev/null; then
     echo ""
     echo "------------------------------------------------------------------"
     echo ""
-    echo "Failed to add Firefox run to auto-run script.  Purging Dependancies...."
+    echo "Failed to add Firefox run to auto-run script. Purging dependencies...."
     sleep 0.5
     echo ""
     apt-get purge -y openbox firefox-esr xinit
     echo ""
     echo "------------------------------------------------------------------"
-    echo "Instalation Failed!"
+    echo "Installation Failed!"
     exit 1
   fi
 fi
@@ -186,7 +185,7 @@ echo "Done!"
 
 echo ""
 echo "------------------------------------------------------------------"
-echo "Starting all services.."
+echo "Starting all services..."
 echo ""
 
 # Function to check if a process is running
@@ -206,6 +205,8 @@ export DISPLAY=:0
 if ! is_process_running "openbox"; then
   nohup openbox &
 fi
+
+sleep 1
 
 # Start Firefox if not running
 if [[ $mode = kiosk ]]; then
