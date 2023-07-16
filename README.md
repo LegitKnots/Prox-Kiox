@@ -64,42 +64,53 @@ The following code should be place in the file
 ```
 #!/bin/bash
 
-profile_dir=$(find ~/.mozilla/firefox/ -name '*.default-esr' -type d)
-if [ -z "$profile_dir" ]; then
-    echo "Firefox profile directory not found."
-    exit 1
-fi
-prefsfile="$profile_dir/sessionstore-backups"
-
-rm -rf "$prefsfile"/*
-
 # Function to check if a process is running
 is_process_running() {
   pgrep "$1" > /dev/null
 }
+
+if  is_process_running "firefox-esr"; then
+  clear
+  echo "Prox-Kiox already running"
+  return 1
+fi
+
+profile_dir=$(find "$HOME/.mozilla/firefox/" -name "*.default-esr" -type d)
+if [ -z "$profile_dir" ]; then
+    echo ""
+    echo "Firefox profile directory not found."
+    return 1
+fi
+prefsfile="$profile_dir/sessionstore-backups"
+
+rm -rf "$prefsfile"/*
 
 # Start X server if not running
 if ! is_process_running "X"; then
   nohup startx &
 fi
 
-sleep 1
+sleep 2
 export DISPLAY=:0
 
 # Start Openbox if not running
 if ! is_process_running "openbox"; then
   nohup openbox &
 fi
-if ! is_process_running "firefox-esr"; then
-  firefox-esr --kiosk "https://127.0.0.1:8006" &
-fi
+
+sleep 2
+
+firefox-esr --kiosk "https://127.0.0.1:8006" &
 ```
 
-Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is times and executes properly
 
-Note that as like above, you can modify the sleeps to suite your case, if the display refuses to connect, just modify the sleep by 1 second more and run again, try to match these with above.
+Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is timed and executes properly
 
-``nohup startx & sleep 1 export DISPLAY=:0 openbox & firefox-esr --kiosk "https://127.0.0.1:8006" &``
+``nohup startx & sleep 2 ; export DISPLAY=:0 ; nohup openbox & sleep 2 ; firefox-esr --kiosk "https://127.0.0.1:8006" &``
+
+Like above, you can modify the sleeps to suite your case, if the display refuses to connect, just modify the sleep by 1 second more and run again, try to match these with above.
+Also note that if this command is run via ssh, all 3 proccesses will be killed when the ssh session disconnects, this needs to be run from the local cli
+
 
 Now you should be able to see FireFox runing and the PVE webui screen.
 
