@@ -53,7 +53,7 @@ First, Update the running server with
 
 Next, we need to install the following dependencies
 
-``apt-get install -y openbox firefox-esr xinit``
+``apt-get install -y firefox-esr xinit x11-utils openbox``
 
 An easy way to beable to call this script whenever is by creating a bash command
 We first need to create the file that houses the script with the following command and then nano into it.
