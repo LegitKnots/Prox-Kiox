@@ -1,9 +1,10 @@
-# Prox-Kiox (version 1.3.5)
+# Prox-Kiox (version 1.4.0)
 
 ## About
 
-### This Project was idealized by a member of the Harvey's Virtual Environment Discord community and brought together by myself.  All credit for the idea goes the HSVE Community. 
-### Prox-Kiox is simply an install script that will essentially turn any Proxmox intall into a kiosk setup, allowing for full UI managemnt of Proxmox from its main display out. 
+### This Project was idealized by a member of the Harvey's Virtual Environment Discord community and brought together by myself.  All credit for the idea goes the HSVE Community.
+
+### Prox-Kiox is simply an install script that will essentially turn any Proxmox intall into a kiosk setup, allowing for full UI managemnt of Proxmox from its main display out.
 ### It will install a window manager as well as Firefox in order to achieve this by opening a window automatically and placing it in full screen mode after navigating to the correct location, being http://127.0.0.1:8006.
 
 ### You can find more about Harvey's Virtual Environment at the following
@@ -54,25 +55,19 @@ Next, we need to install the following dependencies
 
 ``apt-get install -y openbox firefox-esr xinit``
 
-Before we start the process and run the window manager and FireFox, we want to create a script that will automatically run the start script upon login.
-We can first create the file with the following command and then nano into it.
+An easy way to beable to call this script whenever is by creating a bash command
+We first need to create the file that houses the script with the following command and then nano into it.
 
-``touch /etc/profile.d/prox-kiox.sh && nano /etc/profile.d/prox-kiox.sh``
+``touch /usr/bin/prox-kiox && nano /usr/bin/prox-kiox``
 
-The following code should be place in the file
+The following code should be placed in the file
 
 ```
 #!/bin/bash
-
-# Function to check if a process is running
-is_process_running() {
-  pgrep "$1" > /dev/null
-}
-
-if  is_process_running "firefox-esr"; then
-  clear
-  echo "Prox-Kiox already running"
-  return 1
+if pgrep -x "firefox-esr" >/dev/null; then
+    clear
+    echo "Priox-Kiox already running"
+    return 0
 fi
 
 profile_dir=$(find "$HOME/.mozilla/firefox/" -name "*.default-esr" -type d)
@@ -85,31 +80,49 @@ prefsfile="$profile_dir/sessionstore-backups"
 
 rm -rf "$prefsfile"/*
 
-# Start X server if not running
-if ! is_process_running "X"; then
-  nohup startx &
-fi
-
-sleep 2
+mode=""
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --kiosk)
+      mode="kiosk"
+      shift
+      ;;
+    *)
+      echo "Invalid option: $1" >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+nohup startx &
 export DISPLAY=:0
+while true; do
+    result=$(xdpyinfo 2>&1)
+    if [[ $result == *"unable to open display"* ]]; then
+        echo "Error: Unable to open display"
+        sleep 0.25
+    else
+        echo "X server is running and display is available."
+        break
+    fi
+done
 
-# Start Openbox if not running
-if ! is_process_running "openbox"; then
-  nohup openbox &
+if [[ $mode = kiosk ]]; then
+  nohup firefox-esr --kiosk https://127.0.0.1:8006 &
+else
+
+  nohup firefox-esr https://127.0.0.1:8006 &
 fi
-
-sleep 2
-
-firefox-esr --kiosk "https://127.0.0.1:8006" &
+exit $retval
 ```
 
+We need to ensure it can be ran so we will add execute permissions to it
 
-Now that we have it all set up, we can go ahead and run our commands to get it up and running, the commands need to be run as one whole so that it is timed and executes properly
+```chmod +x /user/bin/prox-kiox```
 
-``nohup startx & sleep 2 ; export DISPLAY=:0 ; nohup openbox & sleep 2 ; firefox-esr --kiosk "https://127.0.0.1:8006" &``
+Now its all set up, we can go ahead and run the following to get it started
 
-Like above, you can modify the sleeps to suite your case, if the display refuses to connect, just modify the sleep by 1 second more and run again, try to match these with above.
-Also note that if this command is run via ssh, all 3 proccesses will be killed when the ssh session disconnects, this needs to be run from the local cli
+``prox-kiox``
 
 
 Now you should be able to see FireFox runing and the PVE webui screen.
@@ -120,8 +133,7 @@ Now you should be able to see FireFox runing and the PVE webui screen.
 
 You can use either of the three methods to install but the most stable is going to be with wget.
 
-For the manual install, above defaults to kiosk mode but since the backbone of this is a basic Firefox application, you can remove the --kiost from both commands in the auto run and post install and you'll be able to use it like a normal browser
-If you dont want it to always be full screen you can remove the '--kiosk' from the firefox-esr commands which will let in fun like a normal browser
+After installing, its as simple as running `prox-kiox` in the cli to get it all started.  We can also add `--kiosk` if we want it to be full screen and feel more immersive.
 
 
 
@@ -144,12 +156,15 @@ After they have been changed or not you can simply run the script using the foll
 
 Please not that these scripts do not delete themselves, so you will need to run
 
+``rm /path/to/script/install.sh``
 ``rm /path/to/script/uninstall.sh``
 
 
 ## Known Issues
 
-On some systems, the auto run script will fail to run properly after logon, will require the install script to be run again.
+None :)
+
+
 
 ## Donate
 
@@ -167,5 +182,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Disclaimer
 
-This project is experimental and not official.  Any use of this project may put your resources at a higher risk of failure.  The publisher nor the contributers shall have any liability for any damages casued by the user or the project.  Use at your own risk.
+This project is experimental and not official.  Any use of this project may put your resources at a higher risk of failure.  The publisher nor the contributers shall hold any liability for any damages casued by the user or the project.  Use at your own risk.
 
