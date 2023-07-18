@@ -151,6 +151,7 @@ while [[ $# -gt 0 ]]; do
   esac
   shift
 done
+
 nohup startx &
 export DISPLAY=:0
 while true; do
@@ -167,10 +168,24 @@ done
 if [[ $mode = kiosk ]]; then
   nohup firefox-esr --kiosk https://127.0.0.1:8006 &
 else
-
   nohup firefox-esr https://127.0.0.1:8006 &
 fi
-exit $retval' | tee /usr/bin/prox-kiox > /dev/null; then
+
+wait $!
+
+if pgrep -x "xinit" >/dev/null; then
+    echo "Killing xinit process"
+    killall xinit
+fi
+
+if pgrep -x "firefox-esr" >/dev/null; then
+    echo "Killing firefox-esr process"
+    killall firefox-esr
+fi
+clear
+echo "-----------------"
+echo "Exiting Prox-Kiox"
+echo "-----------------"' | tee /usr/bin/prox-kiox > /dev/null; then
 
 
 
