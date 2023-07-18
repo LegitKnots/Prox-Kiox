@@ -198,10 +198,11 @@ export DISPLAY=:0
 while true; do
     result=$(xdpyinfo 2>&1)
     if [[ $result == *"unable to open display"* ]]; then
-        echo "Error: Unable to open display"
+        echo "Display not available yet"
         sleep 0.25
     else
         echo "X server is running and display is available."
+        sleep 0.25
         break
     fi
 done
