@@ -54,7 +54,7 @@ if [[ $input == "y" ]]; then
   echo "Removing old files..."
   rm -f /etc/profile.d/prox-kiox.sh
   echo "Removing old dependencies..."
-  apt-get remove -y openbox
+  echo "No old dependencies"
   echo "Cleaning..."
   apt-get autoremove -y
   echo "------------------------------------------------------------------"
@@ -106,6 +106,16 @@ echo "Installing dependencies: X11 Utils"
 echo "------------------------------------------------------------------"
 sleep 0.5
 apt-get install -y x11-utils > /dev/null
+echo "------------------------------------------------------------------"
+echo "Done!"
+echo "------------------------------------------------------------------"
+echo ""
+echo ""
+echo "------------------------------------------------------------------"
+echo "Installing dependencies: Openbox"
+echo "------------------------------------------------------------------"
+sleep 0.5
+apt-get install -y openbox > /dev/null
 echo "------------------------------------------------------------------"
 echo "Done!"
 echo "------------------------------------------------------------------"

@@ -1,4 +1,4 @@
-# Prox-Kiox (version 1.4.1)
+# Prox-Kiox (version 1.4.2)
 
 ## About
 
