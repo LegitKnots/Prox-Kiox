@@ -1,20 +1,13 @@
 #!/bin/bash
 
-# Stop running processes
-killall -q openbox
-killall -q firefox-esr
 killall -q xinit
+killall -q firefox-esr
 
-# Remove the auto-run script
-rm /etc/profile.d/prox-kiox.sh
+rm -f /usr/bin/prox-kiox
 rm -rf /root/.mozilla
 rm -rf /etc/firefox-esr
 
-
-# Uninstall dependencies
-apt-get remove -y openbox firefox-esr xinit
-
-# Clean up any residual configuration files
+apt-get remove -y firefox-esr xinit x11-utils
 apt-get autoremove -y
 
 echo "Prox-Kiox Successfully Uninstalled. Sorry to see you go :(";

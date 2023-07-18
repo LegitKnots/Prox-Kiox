@@ -39,6 +39,37 @@ echo ""
 echo ""
 echo ""
 
+
+echo "------------------------------------------------------------------"
+read -p "Are you reinstalling prox-kiox? [Y/n]: " input
+echo ""
+input=${input:-Y}
+input=${input,,}
+
+if [[ $input == "y" ]]; then
+  echo "Killing processes..."
+  killall -q xinit
+  killall -q firefox-esr
+  killall -q openbox
+  echo "Removing old files..."
+  rm -f /etc/profile.d/prox-kiox.sh
+  echo "Removing old dependencies..."
+  apt-get remove -y openbox
+  echo "Cleaning..."
+  apt-get autoremove -y
+  echo "------------------------------------------------------------------"
+  echo "Done"
+  echo "------------------------------------------------------------------"
+else
+  echo "------------------------------------------------------------------"
+  echo "Nothing old to remove"
+  echo "------------------------------------------------------------------"
+  echo ""
+fi
+
+
+
+
 echo "------------------------------------------------------------------"
 echo "Updating the live server"
 echo "------------------------------------------------------------------"
