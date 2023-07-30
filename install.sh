@@ -212,6 +212,7 @@ while true; do
         break
     fi
 done
+sleep 1
 
 if [[ $mode = kiosk ]]; then
   nohup firefox-esr --kiosk https://127.0.0.1:8006 &
