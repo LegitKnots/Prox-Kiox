@@ -18,7 +18,7 @@ echo "                   \\|__|         \\/__/         \\|__|         \\|__|    
 echo ""
 echo ""
 echo ""
-echo "Version 1.4.4"
+echo "Version 1.4.5"
 echo "--------Created by--------------"
 echo ""
 echo " _______   _____ ______ _______ "
