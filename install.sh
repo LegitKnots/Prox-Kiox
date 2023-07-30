@@ -18,7 +18,7 @@ echo "                   \\|__|         \\/__/         \\|__|         \\|__|    
 echo ""
 echo ""
 echo ""
-echo "Version 1.4.0"
+echo "Version 1.4.4"
 echo "--------Created by--------------"
 echo ""
 echo " _______   _____ ______ _______ "
@@ -46,13 +46,16 @@ echo ""
 input=${input:-Y}
 input=${input,,}
 
+## Just a redundant dir change incase not in that dir already
+cd /root
+
 if [[ $input == "y" ]]; then
   echo "Killing processes..."
   killall -q xinit
   killall -q firefox-esr
   killall -q openbox
   echo "Removing old files..."
-  rm -f /etc/profile.d/prox-kiox.sh
+  rm -f /usr/bin/prox-kiox
   echo "Removing old dependencies..."
   echo "No old dependencies"
   echo "Cleaning..."
@@ -194,7 +197,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 nohup startx &
+sleep 1
 export DISPLAY=:0
+sleep 1
+nohup openbox &
 while true; do
     result=$(xdpyinfo 2>&1)
     if [[ $result == *"unable to open display"* ]]; then
